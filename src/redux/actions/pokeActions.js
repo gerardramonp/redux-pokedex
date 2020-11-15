@@ -22,22 +22,15 @@ function loadPokemonsError(actionError) {
     };
 }
 
-export function incrementLoadingCounter() {
-    debugger;
+export function setLoading() {
     return {
-        type: actionTypes.INCREMENT_LOADING_COUNTER,
-    };
-}
-
-export function decrementLoadingCounter() {
-    debugger;
-    return {
-        type: actionTypes.DECREMENT_LOADING_COUNTER,
+        type: actionTypes.SET_LOADING,
     };
 }
 
 export function loadPokemons() {
     return async (dispatch) => {
+        dispatch(setLoading());
         const endpoint = "https://pokeapi.co/api/v2/pokemon?limit=150&offset=0";
         try {
             const pokemonList = await axios(endpoint);
@@ -66,7 +59,6 @@ function loadPokemonDetails(rawPokemonList) {
 
                     if (detailedPokemonList.length === rawPokemonList.length) {
                         dispatch(loadPokemonsSuccess(detailedPokemonList));
-                        dispatch(decrementLoadingCounter());
                     }
                 } catch (error) {
                     dispatch(loadPokemonsError(error));

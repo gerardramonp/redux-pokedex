@@ -1,21 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import {
-    incrementLoadingCounter,
-    decrementLoadingCounter,
-    loadPokemons,
-} from "../../redux/actions/pokeActions";
+import { setLoading, loadPokemons } from "../../redux/actions/pokeActions";
 
 import PokemonCard from "../PokemonCardComponent/PokemonCard";
 
 import "./PokemonList.css";
 
 function PokemonList({ pokemonList, loadingCount, dispatch, actions }) {
-    if (!pokemonList && !pokemonList?.length) {
-        actions.incrementLoadingCounter();
-        dispatch(loadPokemons());
-    }
+    useEffect(() => {
+        if (!pokemonList && !pokemonList?.length) {
+            dispatch(loadPokemons());
+        }
+    });
 
     const loadingWrapper = (
         <>
@@ -45,7 +42,7 @@ function PokemonList({ pokemonList, loadingCount, dispatch, actions }) {
         </>
     );
 
-    return loadingCount > 0 ? loadingWrapper : pokemonListWrapper;
+    return loadingCount ? loadingWrapper : pokemonListWrapper;
 }
 
 function mapStateToProps(state) {
@@ -59,7 +56,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators(
-            { incrementLoadingCounter, decrementLoadingCounter, loadPokemons },
+            { incrementLoadingCounter: setLoading, loadPokemons },
             dispatch
         ),
         dispatch,
