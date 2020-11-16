@@ -54,7 +54,7 @@ function loadPokemonDetails(rawPokemonList) {
                     detailedPokemon = await axios(pokemonEndpoint);
                     detailedPokemonList = [
                         ...detailedPokemonList,
-                        detailedPokemon,
+                        detailedPokemon.data,
                     ];
 
                     if (detailedPokemonList.length === rawPokemonList.length) {
@@ -64,6 +64,8 @@ function loadPokemonDetails(rawPokemonList) {
                     dispatch(loadPokemonsError(error));
                 }
             }
+
+            
         } catch (error) {
             dispatch(loadPokemonsError(error));
         }

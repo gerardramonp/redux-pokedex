@@ -12,7 +12,7 @@ function PokemonList({ pokemonList, loadingCount, dispatch, actions }) {
         if (!pokemonList && !pokemonList?.length) {
             dispatch(loadPokemons());
         }
-    });
+    }, [pokemonList, dispatch]);
 
     const loadingWrapper = (
         <>
@@ -33,8 +33,8 @@ function PokemonList({ pokemonList, loadingCount, dispatch, actions }) {
                     pokemonList.map((currentPokemon) => {
                         return (
                             <PokemonCard
-                                key={currentPokemon.data.name}
-                                pokemonData={currentPokemon.data}
+                                key={currentPokemon.name}
+                                pokemonData={currentPokemon}
                             />
                         );
                     })}
